@@ -75,3 +75,25 @@ function asideSectionTogglerBtn() {
         allSection[i].classList.toggle("open");
     }
 }
+
+
+/*photos */
+
+document.querySelectorAll('.portfolio-img img').forEach(img => {
+    img.addEventListener('click', function () {
+        const modal = document.getElementById('portfolio-modal');
+        const modalImg = document.getElementById('modal-img');
+        modalImg.src = this.src;
+        modal.classList.add('active');
+    });
+});
+
+document.querySelector('.close-modal').addEventListener('click', function () {
+    document.getElementById('portfolio-modal').classList.remove('active');
+});
+
+document.getElementById('portfolio-modal').addEventListener('click', function (e) {
+    if (e.target === this) {
+        this.classList.remove('active');
+    }
+});
