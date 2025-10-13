@@ -422,6 +422,17 @@ h3.my-professiono {
     color: var(--skin-color);
 }
 
+.about .about-content .about-text h4 {
+    font-size: 24px;
+    margin-bottom: 15px;
+    font-weight: 700;
+    color: var(--text-black-900);
+}
+
+.about .about-content .about-text h4 span {
+    color: var(--skin-color);
+}
+
 .about .about-content .about-text p {
     font-size: 16px;
     line-height: 25px;
@@ -693,6 +704,16 @@ h3.my-professiono {
     font-weight: 500;
 }
 
+.portfolio .portfolio-heading h4 {
+    color: var(--text-black-900);
+    font-weight: 400;
+}
+
+.portfolio .portfolio-heading p {
+    color: var(--text-black-900);
+    font-weight: 250;
+}
+
 .portfolio .portfolio-item {
     flex: 0 0 33.33%;
     max-width: 33.33%;
@@ -758,6 +779,15 @@ h3.my-professiono {
     font-weight: 400;
 
 }
+
+.contact .contact-info-item p a {
+    font-size: 16px;
+    line-height: 25px;
+    color: var(--text-black-700);
+    font-weight: 400;
+
+}
+
 
 .contact .contact-form {
     flex: 0 0 100%;
