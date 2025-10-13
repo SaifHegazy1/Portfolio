@@ -470,41 +470,103 @@
                     <h3 class="contact-title padd-15">SEND ME A MESSAGE </h3>
                     <h4 class="contact-sub-title padd-15">I respond to all Messages</h4>
                     <!-- Contact Form-->
-                    <div class="row">
-                        <div class="contact-form padd-15">
-                            <div class="row">
-                                <div class="form-item col-6 padd-15">
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" placeholder="Name">
+                    <!-- <form id="contact-form"
+                        action="https://docs.google.com/forms/d/e/1FAIpQLScCyKmQKj9tWObrIeBSnNPujNMKGrF3P2NPc_9tDOEycslHlQ/formResponse"
+                        method="POST">
+
+                        <div class="row">
+                            <div class="contact-form padd-15">
+                                <div class="row">
+                                    <div class="form-item col-6 padd-15">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" placeholder="Name"
+                                                name="entry.1633920210" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-item col-6 padd-15">
+                                        <div class="form-group">
+                                            <input type="email" class="form-control" placeholder="Email"
+                                                name="entry.227649005" required>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="form-item col-6 padd-15">
-                                    <div class="form-group">
-                                        <input type="email" class="form-control" placeholder="Email">
+
+                                <div class="row">
+                                    <div class="form-item col-12 padd-15">
+                                        <div class="form-group">
+                                            <input type="tel" class="form-control" placeholder="Phone Number"
+                                                name="entry.1770822543" required>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="form-item col-12 padd-15">
-                                    <div class="form-group">
-                                        <input type="text" class="form-control" placeholder="Subject"></input>
+
+                                <div class="row">
+                                    <div class="form-item col-12 padd-15">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" placeholder="Subject"
+                                                name="entry.217818589" required>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="form-item col-12 padd-15">
-                                    <div class="form-group">
-                                        <textarea name="" class="form-control" id="" placeholder="Message"></textarea>
+                                <div class="row">
+                                    <div class="form-item col-12 padd-15">
+                                        <div class="form-group">
+                                            <textarea class="form-control" placeholder="Message" name="entry.1846923513"
+                                                required></textarea>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="form-item col-12 padd-15">
-                                    <button type="submit" class="btn">Send Message</button>
+                                <div class="row">
+                                    <div class="form-item col-12 padd-15">
+                                        <button type="submit" class="btn">Send Message</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </form> -->
+                    <iframe
+                        src="https://docs.google.com/forms/d/e/1FAIpQLScCyKmQKj9tWObrIeBSnNPujNMKGrF3P2NPc_9tDOEycslHlQ/viewform?embedded=true"
+                        width="1024" height="1200" frameborder="0" marginheight="0" flex="block"
+                        marginwidth="0">Loading…</iframe>
+                    <script>
+                        const form = document.getElementById('contact-form');
+                        form.addEventListener("submit", e => {
+                            e.preventDefault();
+
+                            // Display a temporary loading message or disable the button if you want
+                            const submitButton = form.querySelector('.btn');
+                            submitButton.textContent = 'Sending...';
+                            submitButton.disabled = true;
+
+                            fetch(form.action, {
+                                method: "POST",
+                                body: new FormData(document.getElementById("contact-form")),
+                                // 'mode: no-cors' is often necessary for cross-origin form submissions
+                                // to Google Forms to prevent pre-flight errors, though it hides response details.
+                                mode: 'no-cors'
+                            }).then((response) => {
+                                // Because of 'mode: no-cors', you can't check 'response.ok'.
+                                // However, reaching this block usually means the request *sent* successfully.
+
+                                // This pops up a confirmation message
+                                alert('Success! Your message has been sent.');
+
+                                // This clears the form fields
+                                form.reset();
+
+                            }).catch(error => {
+                                // This is for true network errors (e.g., no internet) or a major script crash
+                                alert('Error! Something went wrong. Please try again.');
+                                console.error(error);
+
+                            }).finally(() => {
+                                // Re-enable the button regardless of success or failure
+                                const submitButton = form.querySelector('.btn');
+                                submitButton.textContent = 'Send Message';
+                                submitButton.disabled = false;
+                            });
+                        });
+                    </script>
                 </div>
             </section>
             <!--Contact Section End-->
