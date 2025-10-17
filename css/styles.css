@@ -876,7 +876,7 @@ h3.my-professiono {
     }
 }
 
-@media (max-width:991px) {
+@media (max-width:1100px) {
 
     .portfolio .portfolio-item,
     .contact .contact-info-item {
