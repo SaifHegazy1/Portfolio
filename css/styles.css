@@ -950,6 +950,7 @@ h3.my-professiono {
 
 .Mail-link {
     color: var(--text-black-900);
+    text-decoration: underline;
 }
 
 /* --- Lightbox Container (The transparent overlay) --- */
