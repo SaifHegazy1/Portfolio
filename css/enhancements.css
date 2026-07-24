@@ -1,0 +1,470 @@
+/* ==========================================================================
+   PORTFOLIO ENHANCEMENTS
+   Additive stylesheet — load AFTER styles.css and the active skin file.
+   Uses the existing --skin-color variable set by css/skins/color-*.css so
+   every enhancement automatically matches whichever theme is active.
+   <link rel="stylesheet" href="css/enhancements.css">
+   ========================================================================== */
+
+:root {
+    --card-bg: rgba(255, 255, 255, 0.03);
+    --card-border: rgba(255, 255, 255, 0.08);
+    --card-radius: 14px;
+    --ease: cubic-bezier(.16, .84, .44, 1);
+}
+
+/* ----------------------------------------------------------------------
+   1. PROJECT CARD — wraps each portfolio entry
+   ---------------------------------------------------------------------- */
+.project-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: var(--card-radius);
+    padding: 35px;
+    margin-bottom: 40px;
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity .6s var(--ease), transform .6s var(--ease), border-color .3s;
+    color: var(--text-black-900, #302e4d);
+}
+
+.project-card .project-header-text h2,
+.project-card .project-header-text h4,
+.project-card .project-desc li,
+.project-card .project-desc li::before,
+.project-card .project-link-btn.secondary {
+    color: var(--text-black-900, #302e4d);
+}
+
+.project-card .project-header-text h4,
+.project-card .project-desc li {
+    color: var(--text-black-700, #504e70);
+}
+
+.project-card.in-view {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.project-card:hover {
+    border-color: var(--skin-color, #eb5b3c);
+}
+
+.project-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 18px;
+}
+
+.project-header-text h2 {
+    margin-bottom: 4px;
+}
+
+.project-header-text h4 {
+    font-weight: 500;
+    opacity: .8;
+}
+
+.project-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 14px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    background: var(--skin-color, #eb5b3c);
+    color: #fff;
+    white-space: nowrap;
+}
+
+/* Tech-stack tag chips */
+.tech-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 14px 0 20px;
+}
+
+.tech-tag {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 12.5px;
+    padding: 5px 12px;
+    border-radius: 6px;
+    border: 1px solid var(--skin-color, #eb5b3c);
+    color: var(--skin-color, #eb5b3c);
+    background: color-mix(in srgb, var(--skin-color, #eb5b3c) 8%, transparent);
+    transition: background .25s, color .25s;
+}
+
+.tech-tag:hover {
+    background: var(--skin-color, #eb5b3c);
+    color: #fff;
+}
+
+/* Description as an icon list instead of a <br>-separated wall of text */
+.project-desc {
+    list-style: none;
+    margin: 0 0 24px;
+    padding: 0;
+}
+
+.project-desc li {
+    position: relative;
+    padding-left: 26px;
+    margin-bottom: 10px;
+    line-height: 1.7;
+    font-size: 15.5px;
+}
+
+.project-desc li::before {
+    content: "\f105";
+    /* fa-chevron-right */
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    position: absolute;
+    left: 0;
+    top: 2px;
+    color: var(--skin-color, #eb5b3c);
+    font-size: 13px;
+}
+
+/* Buttons for project links */
+.project-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: 22px;
+}
+
+.project-link-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 11px 22px;
+    border-radius: 8px;
+    border: 2px solid var(--skin-color, #eb5b3c);
+    color: var(--skin-color, #eb5b3c);
+    font-weight: 600;
+    font-size: 14px;
+    text-decoration: none;
+    background: transparent;
+    transition: background .25s var(--ease), color .25s var(--ease), transform .2s var(--ease);
+}
+
+.project-link-btn:hover {
+    background: var(--skin-color, #eb5b3c);
+    color: #fff;
+    transform: translateY(-2px);
+}
+
+.project-link-btn.secondary {
+    border-color: var(--card-border);
+    color: inherit;
+    opacity: .85;
+}
+
+.project-link-btn.secondary:hover {
+    border-color: var(--skin-color, #eb5b3c);
+    background: transparent;
+    color: var(--skin-color, #eb5b3c);
+}
+
+/* ----------------------------------------------------------------------
+   2. GALLERY GRID — replaces the plain row of portfolio-item divs
+   ---------------------------------------------------------------------- */
+.project-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+    gap: 16px;
+}
+
+.project-gallery .portfolio-item {
+    padding: 0;
+    margin: 0;
+}
+
+.project-gallery .portfolio-item-inner {
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    aspect-ratio: 4/3;
+}
+
+.project-gallery .portfolio-img {
+    width: 100%;
+    height: 100%;
+}
+
+.project-gallery .portfolio-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform .5s var(--ease);
+}
+
+.project-gallery .portfolio-item-inner:hover .portfolio-img img {
+    transform: scale(1.08);
+}
+
+.project-gallery .portfolio-item-inner::after {
+    content: "\f065";
+    /* fa-expand */
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    color: #fff;
+    background: rgba(0, 0, 0, 0);
+    opacity: 0;
+    transition: opacity .3s var(--ease), background .3s var(--ease);
+}
+
+.project-gallery .portfolio-item-inner:hover::after {
+    opacity: 1;
+    background: rgba(0, 0, 0, .35);
+}
+
+/* ----------------------------------------------------------------------
+   3. LIGHTBOX — fullscreen browsing with prev/next, counter, keyboard
+   ---------------------------------------------------------------------- */
+.portfolio-modal {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(8, 8, 10, 0.94);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .3s var(--ease);
+    z-index: 9999;
+}
+
+.portfolio-modal.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.portfolio-modal .modal-content {
+    max-width: 88vw;
+    max-height: 82vh;
+    border-radius: 8px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, .5);
+    transform: scale(.96);
+    opacity: 0;
+    transition: transform .25s var(--ease), opacity .25s var(--ease);
+}
+
+.portfolio-modal.active .modal-content {
+    transform: scale(1);
+    opacity: 1;
+}
+
+.portfolio-modal .nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 48px;
+    height: 48px;
+    border: none;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.16);
+    color: #fff;
+    font-size: 24px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000001;
+    backdrop-filter: blur(4px);
+}
+
+.portfolio-modal .nav-btn:hover {
+    background: rgba(255, 255, 255, 0.28);
+}
+
+.portfolio-modal .prev-btn {
+    left: 24px;
+}
+
+.portfolio-modal .next-btn {
+    right: 24px;
+}
+
+.portfolio-modal .modal-counter {
+    position: absolute;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #fff;
+    font-size: 14px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    background: rgba(0, 0, 0, 0.35);
+    padding: 8px 14px;
+    border-radius: 999px;
+    z-index: 1000001;
+}
+
+@media (max-width: 767px) {
+    .portfolio-modal .nav-btn {
+        width: 42px;
+        height: 42px;
+        font-size: 20px;
+    }
+
+    .portfolio-modal .prev-btn {
+        left: 12px;
+    }
+
+    .portfolio-modal .next-btn {
+        right: 12px;
+    }
+
+    .portfolio-modal .modal-counter {
+        bottom: 12px;
+        font-size: 12px;
+    }
+}
+
+.modal-close {
+    position: absolute;
+    top: 22px;
+    right: 30px;
+    font-size: 34px;
+    color: #fff;
+    cursor: pointer;
+    line-height: 1;
+    opacity: .8;
+    transition: opacity .2s, transform .2s;
+}
+
+.modal-close:hover {
+    opacity: 1;
+    transform: rotate(90deg);
+}
+
+.modal-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    color: #fff;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background .2s, transform .2s;
+    user-select: none;
+}
+
+.modal-nav:hover {
+    background: var(--skin-color, #eb5b3c);
+    border-color: var(--skin-color, #eb5b3c);
+}
+
+.modal-prev {
+    left: 24px;
+}
+
+.modal-next {
+    right: 24px;
+}
+
+.modal-nav:active {
+    transform: translateY(-50%) scale(.92);
+}
+
+.modal-counter {
+    position: absolute;
+    bottom: 26px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #fff;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 13px;
+    letter-spacing: .08em;
+    background: rgba(255, 255, 255, 0.08);
+    padding: 6px 16px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+@media (max-width: 700px) {
+    .modal-nav {
+        width: 42px;
+        height: 42px;
+        font-size: 15px;
+    }
+
+    .modal-prev {
+        left: 10px;
+    }
+
+    .modal-next {
+        right: 10px;
+    }
+
+    .modal-close {
+        top: 14px;
+        right: 16px;
+        font-size: 28px;
+    }
+
+    .project-card {
+        padding: 22px;
+    }
+}
+
+/* Respect reduced-motion preference */
+@media (prefers-reduced-motion: reduce) {
+
+    .project-card,
+    .project-gallery .portfolio-img img,
+    .portfolio-modal .modal-content,
+    .project-link-btn {
+        transition: none !important;
+    }
+}
+
+/* Neutralize legacy .portfolio-item sizing rules that leak into the new grid */
+.project-gallery .portfolio-item {
+    flex: none;
+    max-width: none;
+    margin-bottom: 0;
+}
+
+.project-gallery .portfolio-item-inner {
+    border: none;
+}
+
+@media (max-width: 1100px) {
+    .project-gallery .portfolio-item {
+        flex: none;
+        max-width: none;
+    }
+}
+
+@media (max-width: 767px) {
+    .project-gallery .portfolio-item {
+        flex: none;
+        max-width: none;
+    }
+}

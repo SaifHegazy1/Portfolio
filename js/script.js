@@ -1,16 +1,23 @@
 /* Typing Animation */
-var typed = new Typed(".typing", {
-    strings: ["", "Data Analyst", "Data Scientist"]
-    , typeSpeed: 100,
-    backSpeed: 60,
-    loop: true
-})
+(function () {
+    const typingEl = document.querySelector('.typing');
+    if (typingEl && typeof window.Typed === 'function') {
+        new window.Typed(typingEl, {
+            strings: ["", "Data Analyst", "Data Scientist"],
+            typeSpeed: 100,
+            backSpeed: 60,
+            loop: true
+        });
+    }
+})();
+
 /* Aside */
 const nav = document.querySelector(".nav"),
     navList = nav.querySelectorAll("li"),
     totalNavList = navList.length,
     allSection = document.querySelectorAll(".section"),
     totalSection = allSection.length;
+
 for (let i = 0; i < totalNavList; i++) {
     const a = navList[i].querySelector("a");
     a.addEventListener("click", function () {
@@ -18,9 +25,7 @@ for (let i = 0; i < totalNavList; i++) {
         for (let j = 0; j < totalNavList; j++) {
             if (navList[j].querySelector("a").classList.contains("active")) {
                 addBackSection(j);
-                //  allSection[j].classList.add("back-section");
             }
-
             navList[j].querySelector("a").classList.remove("active");
         }
         this.classList.add("active");
@@ -30,6 +35,7 @@ for (let i = 0; i < totalNavList; i++) {
         }
     })
 }
+
 function removeBackSectoin() {
     for (let i = 0; i < totalSection; i++) {
         allSection[i].classList.remove("back-section");
@@ -44,7 +50,6 @@ function showSection(element) {
     }
     const target = element.getAttribute("href").split("#")[1];
     document.querySelector("#" + target).classList.add("active");
-
 }
 function updateNav(element) {
     for (let i = 0; i < totalNavList; i++) {
@@ -55,14 +60,18 @@ function updateNav(element) {
         }
     }
 }
-document.querySelector(".hire-me").addEventListener("click", function () {
-    const sectionIndex = this.getAttribute("data-section-index");
-    //console.log(sectionIndex);
-    showSection(this);
-    updateNav(this);
-    removeBackSectoin();
-    addBackSection(sectionIndex);
-})
+
+const hireMeBtn = document.querySelector(".hire-me");
+if (hireMeBtn) {
+    hireMeBtn.addEventListener("click", function () {
+        const sectionIndex = this.getAttribute("data-section-index");
+        showSection(this);
+        updateNav(this);
+        removeBackSectoin();
+        addBackSection(sectionIndex);
+    })
+}
+
 const navTogglerBtn = document.querySelector(".nav-toggler"),
     aside = document.querySelector(".aside");
 navTogglerBtn.addEventListener("click", () => {
@@ -76,24 +85,28 @@ function asideSectionTogglerBtn() {
     }
 }
 
+/* Portfolio modal is handled directly in index.html so the gallery has one consistent behavior. */
 
-/*photos */
+/* ==========================================================================
+   SCROLL REVEAL for project cards
+   ========================================================================== */
+(function () {
+    const cards = document.querySelectorAll('.project-card');
+    if (!cards.length) return;
 
-document.querySelectorAll('.portfolio-img img').forEach(img => {
-    img.addEventListener('click', function () {
-        const modal = document.getElementById('portfolio-modal');
-        const modalImg = document.getElementById('modal-img');
-        modalImg.src = this.src;
-        modal.classList.add('active');
-    });
-});
-
-document.querySelector('.close-modal').addEventListener('click', function () {
-    document.getElementById('portfolio-modal').classList.remove('active');
-});
-
-document.getElementById('portfolio-modal').addEventListener('click', function (e) {
-    if (e.target === this) {
-        this.classList.remove('active');
+    if (!('IntersectionObserver' in window)) {
+        cards.forEach(c => c.classList.add('in-view'));
+        return;
     }
-});
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('in-view');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.15 });
+
+    cards.forEach(card => observer.observe(card));
+})();
