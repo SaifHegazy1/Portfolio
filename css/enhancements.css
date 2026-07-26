@@ -468,3 +468,78 @@
         max-width: none;
     }
 }
+
+/* ----------------------------------------------------------------------
+   4. SERVICE CARDS — numbering, scroll reveal, and hover polish
+   ---------------------------------------------------------------------- */
+.service .row {
+    counter-reset: service-count;
+}
+
+.service .service-item .service-item-inner {
+    position: relative;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity .6s var(--ease), transform .6s var(--ease),
+        box-shadow .3s ease, border-color .3s ease;
+}
+
+.service .service-item .service-item-inner.in-view {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* light stagger so a row of cards doesn't pop in all at once */
+.service .service-item:nth-child(3n+1) .service-item-inner {
+    transition-delay: 0s;
+}
+
+.service .service-item:nth-child(3n+2) .service-item-inner {
+    transition-delay: .08s;
+}
+
+.service .service-item:nth-child(3n+3) .service-item-inner {
+    transition-delay: .16s;
+}
+
+/* faint auto-numbering, top right of each card */
+.service .service-item .service-item-inner::before {
+    counter-increment: service-count;
+    content: counter(service-count, decimal-leading-zero);
+    position: absolute;
+    top: 6px;
+    right: 18px;
+    font-size: 42px;
+    font-weight: 800;
+    line-height: 1;
+    color: var(--skin-color);
+    opacity: .08;
+    pointer-events: none;
+    transition: opacity .3s ease, transform .3s ease;
+}
+
+.service .service-item .service-item-inner:hover {
+    transform: translateY(-8px);
+    border-color: var(--skin-color);
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.15);
+}
+
+.service .service-item .service-item-inner:hover::before {
+    opacity: .18;
+    transform: scale(1.08);
+}
+
+.service .service-item .service-item-inner .icon {
+    transition: background-color .3s var(--ease), transform .3s var(--ease);
+}
+
+.service .service-item .service-item-inner:hover .icon {
+    transform: scale(1.1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .service .service-item .service-item-inner {
+        transition: none !important;
+    }
+}

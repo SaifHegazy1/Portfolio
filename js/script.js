@@ -88,10 +88,10 @@ function asideSectionTogglerBtn() {
 /* Portfolio modal is handled directly in index.html so the gallery has one consistent behavior. */
 
 /* ==========================================================================
-   SCROLL REVEAL for project cards
+   SCROLL REVEAL for project cards and service cards
    ========================================================================== */
 (function () {
-    const cards = document.querySelectorAll('.project-card');
+    const cards = document.querySelectorAll('.project-card, .service .service-item-inner');
     if (!cards.length) return;
 
     if (!('IntersectionObserver' in window)) {
