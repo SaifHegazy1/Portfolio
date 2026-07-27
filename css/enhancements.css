@@ -543,3 +543,495 @@
         transition: none !important;
     }
 }
+
+/* ----------------------------------------------------------------------
+   5. GENERIC REVEAL UTILITY — fade-up on scroll, used across sections
+   ---------------------------------------------------------------------- */
+.reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity .6s var(--ease), transform .6s var(--ease);
+}
+
+.reveal.in-view {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ----------------------------------------------------------------------
+   6. SECTION TITLES — the underline draws in once the title is visible
+   ---------------------------------------------------------------------- */
+.section-title h2::before,
+.section-title h2::after {
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform .6s var(--ease) .15s;
+}
+
+.section-title.in-view h2::before,
+.section-title.in-view h2::after {
+    transform: scaleX(1);
+}
+
+/* ----------------------------------------------------------------------
+   7. HOME — staggered hero entrance + gently floating portrait
+   ---------------------------------------------------------------------- */
+@keyframes fadeUpIn {
+    from {
+        opacity: 0;
+        transform: translateY(24px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.home .home-info h3.hello,
+.home .home-info h3.my-profession,
+.home .home-info p,
+.home .home-info .btn {
+    opacity: 0;
+    animation: fadeUpIn .7s var(--ease) forwards;
+}
+
+.home .home-info h3.hello {
+    animation-delay: .1s;
+}
+
+.home .home-info h3.my-profession {
+    animation-delay: .25s;
+}
+
+.home .home-info p {
+    animation-delay: .4s;
+}
+
+.home .home-info .btn {
+    animation-delay: .55s;
+}
+
+.home .home-img {
+    opacity: 0;
+    animation: fadeUpIn .8s var(--ease) .3s forwards;
+}
+
+@keyframes floatY {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-14px);
+    }
+}
+
+.home .home-img img {
+    animation: floatY 5s ease-in-out infinite;
+}
+
+/* fix a class-name typo in the base stylesheet: styles.css targets
+   "h3.my-professiono" which never matches the markup's "my-profession",
+   so the heading was falling back to browser defaults */
+h3.my-profession {
+    font-size: 30px;
+    margin: 15px 0;
+}
+
+/* ----------------------------------------------------------------------
+   8. ABOUT — skill-bar fill animation + timeline polish
+   ---------------------------------------------------------------------- */
+.about .about-content .skills .skill-item .progress .progress-in {
+    transition: width 1.2s var(--ease);
+}
+
+/* fix a class-name typo in the base stylesheet: styles.css targets
+   ".cirle-dot" which never matches the markup's "circle-dot", so the
+   timeline dots were rendering invisible */
+.about .about-content .timeline .circle-dot {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 15px;
+    width: 15px;
+    border-radius: 50%;
+    background-color: var(--skin-color);
+    box-shadow: 0 0 0 4px rgba(0, 0, 0, .05);
+    transition: box-shadow .3s ease, transform .3s ease;
+}
+
+.about .about-content .timeline .timeline-item {
+    transition: transform .3s ease;
+}
+
+.about .about-content .timeline .timeline-item:hover {
+    transform: translateX(6px);
+}
+
+.about .about-content .timeline .timeline-item:hover .circle-dot {
+    transform: scale(1.25);
+    box-shadow: 0 0 0 6px rgba(0, 0, 0, .08);
+}
+
+.about .about-content .personal-info .info-item {
+    transition: border-color .3s ease, padding-left .3s ease;
+}
+
+.about .about-content .personal-info .info-item p {
+    transition: border-color .3s ease;
+}
+
+.about .about-content .personal-info .info-item:hover p {
+    border-color: var(--skin-color);
+    padding-left: 6px;
+}
+
+/* ----------------------------------------------------------------------
+   9. CONTACT — card-style info items with staggered reveal
+   ---------------------------------------------------------------------- */
+.contact .contact-info-item {
+    background-color: var(--bg-black-100);
+    border: 1px solid var(--bg-black-50);
+    border-radius: var(--card-radius);
+    padding: 25px 12px;
+    transition: transform .3s var(--ease), box-shadow .3s ease, border-color .3s ease;
+}
+
+.contact .contact-info-item:hover {
+    transform: translateY(-6px);
+    border-color: var(--skin-color);
+    box-shadow: 0 14px 30px rgba(0, 0, 0, .12);
+}
+
+.contact .contact-info-item .icon {
+    height: 55px;
+    width: 55px;
+    border-radius: 50%;
+    background-color: var(--bg-black-50);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 15px;
+    transition: background-color .3s ease, transform .3s ease;
+}
+
+.contact .contact-info-item:hover .icon {
+    background-color: var(--skin-color);
+    transform: scale(1.08);
+}
+
+.contact .contact-info-item:hover .icon .fa {
+    color: #fff;
+}
+
+.contact .contact-info-item:nth-child(5n+1) {
+    transition-delay: 0s;
+}
+
+.contact .contact-info-item:nth-child(5n+2) {
+    transition-delay: .08s;
+}
+
+.contact .contact-info-item:nth-child(5n+3) {
+    transition-delay: .16s;
+}
+
+.contact .contact-info-item:nth-child(5n+4) {
+    transition-delay: .24s;
+}
+
+.contact .contact-info-item:nth-child(5n+5) {
+    transition-delay: .32s;
+}
+
+.contact .contact-form {
+    border-radius: var(--card-radius);
+    overflow: hidden;
+    border: 1px solid var(--card-border);
+}
+
+/* ----------------------------------------------------------------------
+   11. LINKS — drop the underline on email/LinkedIn links, use a color
+   shift on hover instead so they still read as interactive
+   ---------------------------------------------------------------------- */
+.Mail-link {
+    text-decoration: none;
+    transition: color .3s ease;
+}
+
+.Mail-link:hover {
+    color: var(--skin-color);
+}
+
+/* Respect reduced-motion preference across the newly added animations too */
+@media (prefers-reduced-motion: reduce) {
+
+    .reveal,
+    .section-title h2::before,
+    .section-title h2::after,
+    .home .home-info h3.hello,
+    .home .home-info h3.my-profession,
+    .home .home-info p,
+    .home .home-info .btn,
+    .home .home-img,
+    .home .home-img img,
+    .about .about-content .skills .skill-item .progress .progress-in,
+    .about .about-content .timeline .timeline-item,
+    .about .about-content .timeline .circle-dot,
+    .about .about-content .personal-info .info-item,
+    .contact .contact-info-item {
+        animation: none !important;
+        transition: none !important;
+    }
+
+    .reveal,
+    .home .home-info h3.hello,
+    .home .home-info h3.my-profession,
+    .home .home-info p,
+    .home .home-info .btn,
+    .home .home-img {
+        opacity: 1 !important;
+        transform: none !important;
+    }
+
+    .section-title h2::before,
+    .section-title h2::after {
+        transform: scaleX(1) !important;
+    }
+}
+
+/* ----------------------------------------------------------------------
+   10. CERTIFICATIONS — icon + text cards, staggered reveal, hover polish
+   ---------------------------------------------------------------------- */
+.certifications .cert-item {
+    flex: 0 0 50%;
+    max-width: 50%;
+    margin-bottom: 30px;
+}
+
+.certifications .cert-item-inner {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    height: 100%;
+    background-color: var(--bg-black-100);
+    border: 1px solid var(--bg-black-50);
+    border-radius: var(--card-radius);
+    padding: 25px;
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity .6s var(--ease), transform .6s var(--ease),
+        box-shadow .3s ease, border-color .3s ease;
+}
+
+.certifications .cert-item-inner.in-view {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.certifications .cert-item:nth-child(2n+2) .cert-item-inner {
+    transition-delay: .1s;
+}
+
+.certifications .cert-item-inner:hover {
+    transform: translateY(-6px);
+    border-color: var(--skin-color);
+    box-shadow: 0 14px 30px rgba(0, 0, 0, .12);
+}
+
+.certifications .cert-icon {
+    flex: 0 0 60px;
+    height: 60px;
+    width: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--bg-black-50);
+    transition: background-color .3s ease, transform .3s ease;
+}
+
+.certifications .cert-icon .fas {
+    font-size: 24px;
+    color: var(--skin-color);
+    transition: color .3s ease;
+}
+
+.certifications .cert-item-inner:hover .cert-icon {
+    background-color: var(--skin-color);
+    transform: scale(1.08);
+}
+
+.certifications .cert-item-inner:hover .cert-icon .fas {
+    color: #fff;
+}
+
+.certifications .cert-body h4 {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text-black-900);
+    margin-bottom: 8px;
+}
+
+.certifications .cert-issuer {
+    font-size: 14px;
+    line-height: 22px;
+    color: var(--text-black-700);
+    margin-bottom: 8px;
+}
+
+.certifications .cert-date {
+    font-size: 13px;
+    color: var(--text-black-700);
+    margin-bottom: 12px;
+}
+
+.certifications .cert-date .fa {
+    margin-right: 5px;
+    color: var(--skin-color);
+}
+
+.certifications .cert-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 14px;
+}
+
+.certifications .cert-tag {
+    font-size: 12px;
+    padding: 3px 10px;
+    border-radius: 20px;
+    background-color: var(--bg-black-50);
+    color: var(--text-black-700);
+}
+
+.certifications .cert-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--skin-color);
+    transition: gap .3s ease;
+}
+
+.certifications .cert-link:hover {
+    gap: 10px;
+}
+
+.certifications .cert-link i {
+    font-size: 12px;
+}
+
+@media (max-width: 767px) {
+    .certifications .cert-item {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .certifications .cert-item-inner {
+        flex-direction: column;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .certifications .cert-item-inner {
+        animation: none !important;
+        transition: none !important;
+        opacity: 1 !important;
+        transform: none !important;
+    }
+}
+
+/* ----------------------------------------------------------------------
+   12. HOME — social icon row under the CV button
+   ---------------------------------------------------------------------- */
+.home .home-info .home-social {
+    margin-top: 25px;
+    opacity: 0;
+    animation: fadeUpIn .7s var(--ease) .7s forwards;
+}
+
+.home .home-info .home-social a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 44px;
+    width: 44px;
+    margin-right: 12px;
+    border-radius: 50%;
+    border: 1px solid var(--bg-black-50);
+    background-color: var(--bg-black-100);
+    color: var(--text-black-900);
+    font-size: 18px;
+    transition: background-color .3s ease, color .3s ease, transform .3s ease, border-color .3s ease;
+}
+
+.home .home-info .home-social a:hover {
+    background-color: var(--skin-color);
+    border-color: var(--skin-color);
+    color: #fff;
+    transform: translateY(-4px);
+}
+
+/* ----------------------------------------------------------------------
+   13. BACK TO TOP — floating button, scrolls the active section to top
+   ---------------------------------------------------------------------- */
+.back-to-top {
+    position: fixed;
+    right: 30px;
+    bottom: 30px;
+    height: 46px;
+    width: 46px;
+    border-radius: 50%;
+    background-color: var(--skin-color);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, .2);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: opacity .3s ease, transform .3s ease, visibility .3s;
+    z-index: 100;
+    cursor: pointer;
+    border: none;
+}
+
+.back-to-top.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.back-to-top:hover {
+    filter: brightness(1.1);
+}
+
+@media (max-width: 767px) {
+    .back-to-top {
+        right: 18px;
+        bottom: 18px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .home .home-info .home-social,
+    .back-to-top {
+        animation: none !important;
+        transition: none !important;
+    }
+
+    .home .home-info .home-social {
+        opacity: 1 !important;
+    }
+}
