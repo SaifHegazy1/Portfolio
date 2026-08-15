@@ -36,6 +36,29 @@ for (let i = 0; i < totalNavList; i++) {
     })
 }
 
+const logoLink = document.querySelector(".logo a[href='#home']");
+if (logoLink) {
+    logoLink.addEventListener("click", function (event) {
+        event.preventDefault();
+
+        removeBackSectoin();
+        document.querySelectorAll(".nav a").forEach(link => link.classList.remove("active"));
+
+        const homeNavLink = document.querySelector('.nav a[href="#home"]');
+        if (homeNavLink) {
+            homeNavLink.classList.add("active");
+        }
+
+        this.classList.add("active");
+        showSection(this);
+        updateNav(this);
+
+        if (window.innerWidth < 1200) {
+            asideSectionTogglerBtn();
+        }
+    });
+}
+
 function removeBackSectoin() {
     for (let i = 0; i < totalSection; i++) {
         allSection[i].classList.remove("back-section");
