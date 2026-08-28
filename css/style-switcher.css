@@ -2,14 +2,34 @@
     position: fixed;
     right: 0;
     top: 60px;
-    padding: 15px;
-    width: 200px;
-    border: 1px solid var(--bg-black-50);
-    background: var(--bg-black-100);
+    padding: 20px;
+    width: 210px;
+    background: color-mix(in srgb, var(--bg-black-100) 82%, transparent);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid color-mix(in srgb, var(--skin-color) 35%, var(--bg-black-50));
     z-index: 101;
-    border-radius: 5px;
-    transition: all 0.3s ease;
+    border-radius: 18px 0 0 18px;
+    box-shadow:
+        0 20px 45px rgba(0, 0, 0, 0.35),
+        0 0 0 1px rgba(255, 255, 255, 0.02) inset,
+        0 0 30px -8px var(--skin-color);
+    transition: transform 0.45s cubic-bezier(.16, .84, .44, 1);
     transform: translateX(100%);
+}
+
+.style-switcher::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(135deg, var(--skin-color), transparent 45%, transparent 65%, var(--skin-color));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    opacity: .6;
 }
 
 .style-switcher.open {
@@ -18,70 +38,193 @@
 
 .style-switcher .s-icon {
     position: absolute;
-    height: 40px;
-    width: 40px;
+    height: 46px;
+    width: 46px;
     text-align: center;
-    font-size: 20px;
-    background: var(--bg-black-100);
-    color: var(--text-black-900);
+    line-height: 46px;
+    font-size: 18px;
+    background: linear-gradient(160deg, var(--bg-black-100), color-mix(in srgb, var(--bg-black-100) 70%, var(--skin-color)));
+    color: var(--skin-color);
     right: 100%;
-    border: 1px solid var(--bg-black-50);
+    border: 1px solid color-mix(in srgb, var(--skin-color) 30%, var(--bg-black-50));
     margin-right: 25px;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: background .35s ease, color .35s ease, transform .35s cubic-bezier(.34, 1.56, .64, 1), box-shadow .35s ease;
     border-radius: 50%;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25), 0 0 0 0 var(--skin-color);
+    overflow: hidden;
 }
 
-.style-switcher .s-icon {
-    line-height: 40px;
+.style-switcher .s-icon:hover {
+    background: var(--skin-color);
+    color: #fff;
+    transform: scale(1.12) rotate(8deg);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3), 0 0 18px 2px var(--skin-color);
 }
 
 .style-switcher .style-switcher-toggler {
     top: 0;
 }
 
+.style-switcher .style-switcher-toggler i {
+    display: inline-block;
+    transition: transform .5s cubic-bezier(.16, .84, .44, 1);
+}
+
+.style-switcher .style-switcher-toggler:hover i {
+    transform: rotate(180deg);
+}
+
 .style-switcher .day-night {
     top: 55px;
 }
 
-.style-switcher h4 {
-    margin: 0 0 10px;
-    color: var(--text-black-700);
-    font-size: 16px;
-    font-weight: 600;
-    text-transform: capitalize;
+.style-switcher .day-night i {
+    display: inline-block;
+    transition: transform .45s cubic-bezier(.34, 1.56, .64, 1), opacity .25s ease;
+}
 
+.style-switcher .day-night.spin i {
+    animation: iconFlip .45s cubic-bezier(.34, 1.56, .64, 1);
+}
+
+@keyframes iconFlip {
+    0% {
+        transform: rotate(0) scale(1);
+    }
+
+    50% {
+        transform: rotate(180deg) scale(0.4);
+        opacity: .3;
+    }
+
+    100% {
+        transform: rotate(360deg) scale(1);
+        opacity: 1;
+    }
+}
+
+.style-switcher h4 {
+    margin: 0 0 16px;
+    color: var(--text-black-900);
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    padding-bottom: 12px;
+    border-bottom: 1px solid color-mix(in srgb, var(--skin-color) 25%, var(--bg-black-50));
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.style-switcher h4::before {
+    content: '';
+    display: inline-block;
+    height: 8px;
+    width: 8px;
+    border-radius: 50%;
+    background: var(--skin-color);
+    box-shadow: 0 0 8px 1px var(--skin-color);
 }
 
 .style-switcher .colors {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
+    gap: 12px 0;
 }
 
 .style-switcher .colors span {
     display: inline-block;
-    height: 30px;
-    width: 30px;
+    height: 32px;
+    width: 32px;
     border-radius: 50%;
+    cursor: pointer;
+    position: relative;
+    box-shadow:
+        0 0 0 3px var(--bg-black-100),
+        0 3px 8px rgba(0, 0, 0, 0.25);
+    transition: transform .3s cubic-bezier(.34, 1.56, .64, 1), box-shadow .3s ease;
+}
+
+.style-switcher .colors span::after {
+    content: "";
+    position: absolute;
+    inset: -6px;
+    border-radius: 50%;
+    border: 2px solid currentColor;
+    opacity: 0;
+    transform: scale(.7);
+    transition: opacity .3s ease, transform .3s cubic-bezier(.34, 1.56, .64, 1);
+}
+
+.style-switcher .colors span:hover {
+    transform: translateY(-3px) scale(1.08);
+    box-shadow:
+        0 0 0 3px var(--bg-black-100),
+        0 6px 16px rgba(0, 0, 0, 0.3),
+        0 0 14px -2px currentColor;
+}
+
+.style-switcher .colors span.active {
+    box-shadow:
+        0 0 0 3px var(--bg-black-100),
+        0 0 16px 1px currentColor;
+}
+
+.style-switcher .colors span.active::after {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.style-switcher .colors span.active::before {
+    content: "\f00c";
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 12px;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.45);
 }
 
 .style-switcher .color-1 {
     background: #ec1839;
+    color: #ec1839;
 }
 
 .style-switcher .color-2 {
     background: #fa5b0f;
+    color: #fa5b0f;
 }
 
 .style-switcher .color-3 {
     background: #37b182;
+    color: #37b182;
 }
 
 .style-switcher .color-4 {
     background: #1854b4;
+    color: #1854b4;
 }
 
 .style-switcher .color-5 {
     background: #f021b2;
+    color: #f021b2;
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .style-switcher,
+    .style-switcher .s-icon,
+    .style-switcher .s-icon i,
+    .style-switcher .colors span,
+    .style-switcher .colors span::after {
+        transition: none !important;
+        animation: none !important;
+    }
 }

@@ -22,14 +22,33 @@ function setActiveStyle(color) {
             style.setAttribute("disabled", "true");
         }
     })
+
+    // highlight the swatch that matches the active skin
+    document.querySelectorAll(".style-switcher .colors span").forEach((swatch) => {
+        swatch.classList.toggle("active", swatch.classList.contains(color));
+    })
 }
+
+// mark the default/currently-enabled skin as active on load
+window.addEventListener("load", () => {
+    const enabledStyle = Array.from(alternateStyles).find((style) => !style.hasAttribute("disabled"));
+    if (enabledStyle) {
+        setActiveStyle(enabledStyle.getAttribute("title"));
+    }
+})
+
 /* Theme light and dark mode*/
 
 const dayNight = document.querySelector(".day-night");
-dayNight.addEventListener("click",()=>{
+dayNight.addEventListener("click", () => {
     dayNight.querySelector("i").classList.toggle("fa-sun");
     dayNight.querySelector("i").classList.toggle("fa-moon");
     document.body.classList.toggle("dark");
+
+    // replay the flip animation on every click
+    dayNight.classList.remove("spin");
+    void dayNight.offsetWidth; // force reflow so the animation can restart
+    dayNight.classList.add("spin");
 })
 window.addEventListener("load", () => {
     if (document.body.classList.contains("dark")) {
