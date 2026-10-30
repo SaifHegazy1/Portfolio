@@ -217,6 +217,24 @@
     color: #f021b2;
 }
 
+/* language (English / Arabic) button — sits under the dark-mode button */
+.style-switcher .lang-toggle {
+    top: 110px;
+    font-weight: 700;
+    font-size: 17px;
+    font-family: 'Poppins', 'Cairo', sans-serif;
+    user-select: none;
+}
+
+.style-switcher .lang-toggle .lang-label {
+    display: inline-block;
+    transition: transform .45s cubic-bezier(.34, 1.56, .64, 1);
+}
+
+.style-switcher .lang-toggle:hover .lang-label {
+    transform: scale(1.1);
+}
+
 @media (prefers-reduced-motion: reduce) {
 
     .style-switcher,

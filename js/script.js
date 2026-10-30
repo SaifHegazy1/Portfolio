@@ -1,15 +1,21 @@
-/* Typing Animation */
-(function () {
+/* Typing Animation (restartable so the language switcher can change its words) */
+window.typedInstance = null;
+window.startTyping = function (strings) {
     const typingEl = document.querySelector('.typing');
-    if (typingEl && typeof window.Typed === 'function') {
-        new window.Typed(typingEl, {
-            strings: ["", "Data Analyst", "Data Scientist"],
-            typeSpeed: 100,
-            backSpeed: 60,
-            loop: true
-        });
+    if (!typingEl || typeof window.Typed !== 'function') return;
+    if (window.typedInstance) {
+        window.typedInstance.destroy();
+        window.typedInstance = null;
     }
-})();
+    typingEl.textContent = '';
+    window.typedInstance = new window.Typed(typingEl, {
+        strings: strings,
+        typeSpeed: 100,
+        backSpeed: 60,
+        loop: true
+    });
+};
+window.startTyping(["", "Data Analyst", "Data Scientist"]);
 
 /* Aside */
 const nav = document.querySelector(".nav"),
